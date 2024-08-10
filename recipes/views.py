@@ -1,4 +1,8 @@
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    ListAPIView,
+)
 
 from recipes.models import Recipe, Chef
 from recipes.serializers import RecipeSerializer, ChefSerializer
@@ -8,6 +12,7 @@ class CreateChef(CreateAPIView):
     """
     View for creation of Chef object
     """
+
     model = Chef
     serializer_class = ChefSerializer
 
@@ -16,7 +21,7 @@ class CreateRecipe(CreateAPIView):
     """
     View for creation of Recipe object
     """
-    model = Recipe
+
     serializer_class = RecipeSerializer
 
 
@@ -24,6 +29,7 @@ class DetailRecipe(RetrieveUpdateDestroyAPIView):
     """
     View who shows the details of a recipe, and make his update and delete
     """
+
     serializer_class = RecipeSerializer
     queryset = Recipe
 
@@ -32,6 +38,7 @@ class SearchRecipes(ListAPIView):
     """
     View responsible for search recipes based on the name and difficulty
     """
+
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
@@ -42,8 +49,8 @@ class SearchRecipes(ListAPIView):
         """
         params = self.request.query_params
         queryset = Recipe.objects.filter(
-            name__icontains=params.get('name', ''),
-            difficulty__icontains=params.get('difficulty', ''),
-            chef__name__icontains=params.get('chef', '')
-        ).order_by('created')
+            name__icontains=params.get("name", ""),
+            difficulty__icontains=params.get("difficulty", ""),
+            chef__name__icontains=params.get("chef", ""),
+        ).order_by("created")
         return queryset
